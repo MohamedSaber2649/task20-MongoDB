@@ -1,7 +1,8 @@
 import express from "express";
 import { connectToMongoDB } from "./db.js";
-import { run } from "node:test";
 const app = express();
+process.loadEnvFile()
+const port = process.env.PORT;
 const client = await connectToMongoDB();
 const db = client.db("sample_mflix");
 const movies = db.collection("movies");
@@ -76,6 +77,6 @@ app.get("/q6", async (req, res) => {
     ]).toArray();
     return res.status(200).json(data)
 })
-app.listen(8000, () => {
-    console.log("server is openning on port 8000");
+app.listen(port, () => {
+    console.log(`server is openning on port ${port}`);
 })
